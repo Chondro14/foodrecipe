@@ -9,16 +9,22 @@ part 'ProductsState.dart';
 class ProductsCubit extends Cubit<ProductsState>{
   ProductsCubit() : super(ProductsInitial());
 
+  //Function Asyncronous
   Future<void> fetchProducts()async{
+    // Handling error try and catch
     try{
+      //Sebagai pengunpdate state atau sebagai reactive state yang akan menentukan state ini bener atau tidak
       emit(ProductsLoading());
+      //Instances
       List<Product> products = await ProductService().getProducts();
+      //Sebagai pengunpdate state atau sebagai reactive state yang akan menentukan state ini bener atau tidak
       emit(ProductsGetSuccess(products));
     }catch(e){
       emit(ProductsFailed("Get data Failed"));
       print(e);
     }
   }
+  //
   void fetchDetailProduct(String id)async{
     try{
       emit(ProductsLoading());

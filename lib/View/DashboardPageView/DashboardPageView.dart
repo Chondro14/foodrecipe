@@ -26,7 +26,13 @@ class _DashboardPageViewState extends State<DashboardPageView> {
   @override
   Widget build(BuildContext context) {
     Widget logoutButton() {
+      /* sebagai pemantik reactive state yang telah dibuat pada class cubit. disisi lain perlu diperhatikan
+      pada saat builder , yang akan terjadi akan merender / membentuk view berdasarkan state yang dibuat.try
+      Listener sebagai ini benar nggk ya functionilitynya . kalau success bakalan sesuai cubit functionalitinya.jika gagal
+      bakal dikasih tahu
+      */
       return BlocConsumer<LoginCubit, LoginState>(builder: (context, state) {
+        // state merupakan LoginLoading
         if (state is LoginLoading) {
           return Center(
             child: CircularProgressIndicator(),
@@ -41,7 +47,9 @@ class _DashboardPageViewState extends State<DashboardPageView> {
               color: redColor,
             ));
       }, listener: (context, state) {
+        // state merupakan LogoutUserData
         if (state is LogoutUserData) {
+
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: greenColor,
               content: Text(
@@ -52,7 +60,8 @@ class _DashboardPageViewState extends State<DashboardPageView> {
               context,
               MaterialPageRoute(builder: (context) => SigninPageView()),
               (route) => false);
-        } else if (state is LoginFailed) {
+        } // state merupakan LoginFailed
+        else if (state is LoginFailed) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: redColor,
               content: Text(
@@ -78,7 +87,13 @@ class _DashboardPageViewState extends State<DashboardPageView> {
             color: whiteColor,
           )),
       body:
+      /* sebagai pemantik reactive state yang telah dibuat pada class cubit. disisi lain perlu diperhatikan
+      pada saat builder , yang akan terjadi akan merender / membentuk view berdasarkan state yang dibuat.try
+      Listener sebagai ini benar nggk ya functionilitynya . kalau success bakalan sesuai cubit functionalitinya.jika gagal
+      bakal dikasih tahu
+      */
           BlocConsumer<ProductsCubit, ProductsState>(builder: (context, state) {
+            // ketika state ProductGetSuccess terpilih
         if (state is ProductsGetSuccess) {
           return CustomScrollView(
             slivers: [
@@ -117,7 +132,10 @@ class _DashboardPageViewState extends State<DashboardPageView> {
         return Center(
           child: CircularProgressIndicator(),
         );
-      }, listener: (context, state) {
+      }, /*Listener sebagai pemantik ketika ada action dari Onpressed,OnTap dsb.sehingga state akan terupdate secara otomatis
+      */
+              listener: (context, state) {
+            // ketika state ProductsFailed terpilih
         if (state is ProductsFailed) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: redColor,

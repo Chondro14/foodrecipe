@@ -28,6 +28,7 @@ class ProductService{
     }
   }
    Future<List<ProductDetail>> getDetailProduct(String id)async{
+
     var uri = Uri.parse("$url/file_php/detail_product.php");
     var headers = {'Content-Type':'application/json'};
     var response = await http.post(uri,body: {'id':id});
